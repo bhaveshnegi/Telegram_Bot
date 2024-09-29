@@ -2,7 +2,6 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 import requests
 
-# Replace with your actual Telegram Bot Token
 TOKEN = "8092165983:AAEurAHjjOIC9YEppehS8izSr-fChN2uuqo"
 
 class JobApplicationBot:
@@ -13,14 +12,18 @@ class JobApplicationBot:
         self.internshala_session.cookies.update(internshala_cookies)
 
     def apply_linkedin(self, job_url):
-        # Placeholder for the actual LinkedIn job application logic
-        response = self.linkedin_session.post(job_url)
-        return response.status_code == 200
+        headers = {
+            "User-Agent": "Your User Agent Here",
+        }
+        response = self.linkedin_session.post(job_url, headers=headers)
+        return response.ok
 
     def apply_internshala(self, job_url):
-        # Placeholder for the actual Internshala job application logic
-        response = self.internshala_session.post(job_url)
-        return response.status_code == 200
+        headers = {
+            "User-Agent": "Your User Agent Here",
+        }
+        response = self.internshala_session.post(job_url, headers=headers)
+        return response.ok
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Welcome to the Job Application Bot! Use /help to see available commands.")
@@ -38,28 +41,16 @@ async def apply_jobs(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Please enter your LinkedIn cookies in the format 'cookie_name=cookie_value; ...'")
 
 async def handle_cookies(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # Here you can handle the cookie input from the user
     cookies_input = update.message.text
     try:
-        # Split the cookies and create a dictionary
         cookies = dict([cookie.split('=') for cookie in cookies_input.split('; ')])
+        
+        # Ask for job URLs
+        await update.message.reply_text("Please enter the LinkedIn job URL you want to apply to:")
 
-        # Placeholder for actual job URLs
-        linkedin_job_url = "https://www.linkedin.com/jobs/example-job"  # Replace with actual LinkedIn job URL
-        internshala_job_url = "https://internshala.com/internship/example-job"  # Replace with actual Internshala job URL
+        # Here, wait for the user to send the job URL
+        # This can be improved by saving the state to capture the next message as the URL
 
-        # Create a job application bot instance with cookies
-        bot_instance = JobApplicationBot(cookies, cookies)
-
-        # Apply for jobs
-        linkedin_success = bot_instance.apply_linkedin(linkedin_job_url)
-        internshala_success = bot_instance.apply_internshala(internshala_job_url)
-
-        if linkedin_success and internshala_success:
-            await update.message.reply_text("Successfully applied for jobs on LinkedIn and Internshala.")
-        else:
-            await update.message.reply_text("Failed to apply for jobs. Please check your cookies and try again.")
-    
     except Exception as e:
         await update.message.reply_text(f"Error: {str(e)}. Please enter your cookies again.")
 
