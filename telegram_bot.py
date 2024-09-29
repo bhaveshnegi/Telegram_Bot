@@ -5,7 +5,7 @@ import requests
 TOKEN = "8092165983:AAEurAHjjOIC9YEppehS8izSr-fChN2uuqo"
 
 LINKEDIN_COOKIES = {
-    "li_at": "AQEDAT2ZwL8FZFp7AAABkj59npwAAAGSYooinE0AwuQtUTOs5VNV6u_tsy0aCAGyJ6oz9nIrfZSIitzvvJzq-ySMCAoxS_V_JC8d1NchPw9L-ZxNHCyJ3eKcKeFjYfK7g1xysy92ozWJRD30hz_MfU7I"
+    "li_at": "#cookievalue"
 }
 
 class JobApplicationBot:
@@ -15,7 +15,7 @@ class JobApplicationBot:
 
     def apply_linkedin(self, job_url):
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",  
+            "User-Agent": "user agent ",  
             "Referer": "https://www.linkedin.com/",
             "Accept-Language": "en-US,en;q=0.9",
         }
